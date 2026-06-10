@@ -1,7 +1,7 @@
 function App() {
   return (
-    <div>
-      <h1>Météo Land</h1>
+    <div className="flex justify-center items-center h-screen bg-blue-500">
+      <h1 className="text-4xl font-bold text-white">Météo Land</h1>
     </div>
   );
 }
