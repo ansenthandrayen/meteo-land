@@ -42,7 +42,7 @@ function WeatherCard({ data }) {
         <div className="bg-blue-50 rounded-xl p-3">
           <p className="text-xs text-gray-500 mb-1">Vent</p>
           <p className="font-semibold text-gray-700">
-            {Math.round(wind.speed)} m/s
+            {Math.round(wind.speed * 3.6)} km/h
           </p>
         </div>
       </div>
