@@ -44,3 +44,21 @@ export async function searchCities(query) {
 
   return response.json();
 }
+
+// Météo actuelle par coordonnées GPS
+export async function getCurrentWeatherByCoords(lat, lon) {
+  const response = await fetch(
+    `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=fr`,
+  );
+  if (!response.ok) throw new Error("Météo introuvable");
+  return response.json();
+}
+
+// Prévisions par coordonnées GPS
+export async function getForecastByCoords(lat, lon) {
+  const response = await fetch(
+    `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=fr`,
+  );
+  if (!response.ok) throw new Error("Prévisions introuvables");
+  return response.json();
+}
