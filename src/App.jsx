@@ -8,7 +8,10 @@ import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
 
 // On importe nos fonctions API
-import { getCurrentWeather, getForecast } from "./services/weatherApi";
+import {
+  getCurrentWeatherByCoords,
+  getForecastByCoords,
+} from "./services/weatherApi";
 
 function App() {
   // Les 4 états de notre application
@@ -27,8 +30,8 @@ function App() {
     try {
       // On appelle les deux endpoints en parallèle
       const [weather, forecast] = await Promise.all([
-        getCurrentWeather(city),
-        getForecast(city),
+        getCurrentWeatherByCoords(city.lat, city.lon),
+        getForecastByCoords(city.lat, city.lon),
       ]);
 
       setWeatherData(weather);
