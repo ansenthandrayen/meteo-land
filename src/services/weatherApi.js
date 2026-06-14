@@ -30,3 +30,17 @@ export async function getForecast(city) {
 
   return response.json();
 }
+
+// Fonction pour rechercher des villes correspondant à un terme
+// Renvoie une liste de villes avec leur pays
+export async function searchCities(query) {
+  const response = await fetch(
+    `http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${API_KEY}`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Erreur lors de la recherche");
+  }
+
+  return response.json();
+}
