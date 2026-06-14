@@ -17,10 +17,10 @@ function ForecastCard({ data }) {
         {dailyForecasts.map((item) => (
           <div
             key={item.dt}
-            className="bg-white rounded-xl shadow p-2 flex flex-col items-center gap-1"
+            className="bg-white/40 rounded-xl shadow p-2 flex flex-col items-center gap-1"
           >
             {/* Jour de la semaine */}
-            <p className="text-xs font-semibold text-gray-600">
+            <p className="text-xs font-semibold text-white/70">
               {new Date(item.dt * 1000).toLocaleDateString("fr-FR", {
                 weekday: "short",
               })}
@@ -34,7 +34,7 @@ function ForecastCard({ data }) {
             />
 
             {/* Température */}
-            <p className="text-sm font-bold text-blue-500">
+            <p className="text-sm font-bold text-white/70">
               {Math.round(item.main.temp)}°C
             </p>
           </div>
