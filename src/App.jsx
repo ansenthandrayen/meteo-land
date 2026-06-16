@@ -91,7 +91,7 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br ${background} transition-all duration-1000 p-6`}
+      className={`min-h-screen bg-gradient-to-br ${background} transition-all duration-1000 p-6 flex flex-col justify-center`}
     >
       {/* Titre principal */}
       <h1 className="text-4xl font-bold text-white text-center mb-2">
