@@ -68,12 +68,12 @@ function ForecastCard({ data }) {
 
             {/* Température maximale de la journée */}
             <p className="text-sm font-bold text-white">
-              {Math.round(item.temp_max)}°
+              ↑ {Math.round(item.temp_max)}°
             </p>
 
             {/* Température minimale de la journée */}
             <p className="text-xs text-white/40">
-              {Math.round(item.temp_min)}°
+              ↓ {Math.round(item.temp_min)}°
             </p>
           </div>
         ))}
