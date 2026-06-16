@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-// On importe nos composants
+// Import des composants
 import ErrorMessage from "./components/ErrorMessage";
 import ForecastCard from "./components/ForecastCard";
 import LoadingSpinner from "./components/LoadingSpinner";
 import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
 
-// On importe nos fonctions API
+// Import des fonctions API
 import {
   getCurrentWeatherByCoords,
   getForecastByCoords,
@@ -44,21 +44,34 @@ function getBackground(weatherData) {
 }
 
 function App() {
-  // Les 4 états de notre application
-  const [weatherData, setWeatherData] = useState(null); // données météo actuelle
-  const [forecastData, setForecastData] = useState(null); // données prévisions
-  const [loading, setLoading] = useState(false); // chargement en cours ?
-  const [error, setError] = useState(null); // message d'erreur
+  // Données météo actuelles
+  const [weatherData, setWeatherData] = useState(null);
 
-  // Appelée quand l'utilisateur recherche une ville
+  // Données des prévisions 5 jours
+  const [forecastData, setForecastData] = useState(null);
+
+  // Chargement en cours
+  const [loading, setLoading] = useState(false);
+
+  // Message d'erreur
+  const [error, setError] = useState(null);
+
+  // Indique si l'utilisateur a déjà effectué une recherche
+  // Permet d'afficher le message d'accueil tant qu'aucune recherche n'a été faite
+  const [hasSearched, setHasSearched] = useState(false);
+
+  // Appelée quand l'utilisateur choisit une ville dans les suggestions
   async function handleSearch(city) {
-    setLoading(true); // on affiche le spinner
-    setError(null); // on efface l'erreur précédente
+    setLoading(true);
+    setError(null);
     setWeatherData(null);
     setForecastData(null);
 
+    // On marque qu'une recherche a été effectuée → cache le message d'accueil
+    setHasSearched(true);
+
     try {
-      // On appelle les deux endpoints en parallèle
+      // Appels API en parallèle avec les coordonnées GPS de la ville
       const [weather, forecast] = await Promise.all([
         getCurrentWeatherByCoords(city.lat, city.lon),
         getForecastByCoords(city.lat, city.lon),
@@ -67,9 +80,9 @@ function App() {
       setWeatherData(weather);
       setForecastData(forecast);
     } catch (err) {
-      setError(err.message); // on affiche l'erreur
+      setError(err.message);
     } finally {
-      setLoading(false); // on cache le spinner dans tous les cas
+      setLoading(false);
     }
   }
 
@@ -80,11 +93,12 @@ function App() {
     <div
       className={`min-h-screen bg-gradient-to-br ${background} transition-all duration-1000 p-6`}
     >
-      {/* Titre */}
-      <h1 className="text-4xl font-bold text-white text-center mb-8">
+      {/* Titre principal */}
+      <h1 className="text-4xl font-bold text-white text-center mb-2">
         🌤️ Météo Land
       </h1>
 
+      {/* Sous-titre */}
       <p className="text-center text-white/60 text-sm mb-8">
         Recherchez n'importe quelle ville dans le monde
       </p>
@@ -92,12 +106,50 @@ function App() {
       {/* Barre de recherche */}
       <SearchBar onSearch={handleSearch} />
 
-      {/* Contenu dynamique selon l'état */}
+      {/* Contenu principal */}
       <div className="mt-8 flex flex-col items-center gap-6">
+        {/* Spinner affiché pendant le chargement */}
         {loading && <LoadingSpinner />}
+
+        {/* Message d'erreur si la ville est introuvable */}
         {error && <ErrorMessage message={error} />}
+
+        {/* Carte météo actuelle */}
         {weatherData && <WeatherCard data={weatherData} />}
+
+        {/* Carte prévisions 5 jours */}
         {forecastData && <ForecastCard data={forecastData} />}
+
+        {/* Message d'accueil → affiché uniquement avant la première recherche */}
+        {!hasSearched && !loading && (
+          <div className="text-center mt-8 flex flex-col items-center gap-4">
+            {/* Icône décorative */}
+            <div className="text-6xl">🌍</div>
+
+            {/* Message principal */}
+            <p className="text-white/70 text-lg font-medium">
+              Où fait-il beau aujourd'hui ?
+            </p>
+
+            {/* Message secondaire */}
+            <p className="text-white/40 text-sm max-w-xs">
+              Tapez le nom d'une ville pour obtenir la météo actuelle et les
+              prévisions sur 5 jours.
+            </p>
+
+            {/* Suggestions de villes populaires */}
+            <div className="flex flex-wrap justify-center gap-2 mt-2">
+              {["Paris", "Tokyo", "New York", "Sydney", "Dubai"].map((city) => (
+                <span
+                  key={city}
+                  className="bg-white/10 border border-white/20 text-white/60 text-xs px-3 py-1 rounded-full"
+                >
+                  {city}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
