@@ -42,37 +42,48 @@ function SearchBar({ onSearch }) {
   return (
     <div className="relative w-full max-w-md mx-auto">
       {/* Champ de recherche */}
-      <input
-        type="text"
-        value={query}
-        onChange={handleChange}
-        placeholder="Rechercher une ville..."
-        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-blue-400 shadow-sm"
-      />
-
-      {/* Spinner de chargement */}
-      {loading && (
-        <div className="absolute right-4 top-3.5">
-          <div className="w-5 h-5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
-        </div>
-      )}
+      <div className="flex items-center bg-white/15 backdrop-blur-md border border-white/25 rounded-full px-5 py-3 gap-3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-4 h-4 text-white/50 shrink-0"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"
+          />
+        </svg>
+        <input
+          type="text"
+          value={query}
+          onChange={handleChange}
+          placeholder="Rechercher une ville..."
+          className="bg-transparent flex-1 text-white placeholder-white/40 focus:outline-none text-sm"
+        />
+        {/* Spinner inline */}
+        {loading && (
+          <div className="w-4 h-4 border-2 border-white/40 border-t-transparent rounded-full animate-spin shrink-0"></div>
+        )}
+      </div>
 
       {/* Liste des suggestions */}
       {suggestions.length > 0 && (
-        <ul className="absolute z-10 w-full bg-white border border-gray-200 rounded-xl shadow-lg mt-1 overflow-hidden">
+        <ul className="absolute z-10 w-full mt-2 bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl overflow-hidden">
           {suggestions.map((city, index) => (
             <li
               key={index}
               onClick={() => handleSelect(city)}
-              className="px-4 py-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center"
+              className="px-5 py-3 hover:bg-white/15 cursor-pointer flex justify-between items-center transition-colors border-b border-white/10 last:border-none"
             >
-              {/* Nom de la ville et région */}
-              <span className="font-medium text-gray-800">
+              <span className="text-white text-sm font-medium">
                 {city.name}
                 {city.state ? `, ${city.state}` : ""}
               </span>
-              {/* Code pays */}
-              <span className="text-sm text-gray-400">{city.country}</span>
+              <span className="text-white/40 text-xs">{city.country}</span>
             </li>
           ))}
         </ul>
