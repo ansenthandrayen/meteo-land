@@ -59,6 +59,15 @@ function SearchBar({ onSearch }) {
     }
   }
 
+  // Appelée quand l'utilisateur appuie sur une touche dans le champ
+  // Si Entrée est pressée → on sélectionne la première suggestion disponible
+  function handleKeyDown(e) {
+    if (e.key === "Enter" && suggestions.length > 0) {
+      // On prend automatiquement la première ville de la liste
+      handleSelect(suggestions[0]);
+    }
+  }
+
   // Appelée quand l'utilisateur clique sur une ville dans la liste
   // Remonte la ville choisie au composant parent (App.jsx)
   function handleSelect(city) {
@@ -92,10 +101,12 @@ function SearchBar({ onSearch }) {
         </svg>
 
         {/* Champ de saisie */}
+        {/* onKeyDown → écoute les touches clavier pour détecter Entrée */}
         <input
           type="text"
           value={query}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
           placeholder="Rechercher une ville..."
           className="bg-transparent flex-1 text-white placeholder-white/40 focus:outline-none text-sm"
         />
