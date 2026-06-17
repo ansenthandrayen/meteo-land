@@ -1,16 +1,66 @@
-# React + Vite
+# 🌤️ Météo Land
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application météo moderne avec recherche de villes dans le monde entier, prévisions sur 5 jours, et interface glassmorphism responsive.
 
-Currently, two official plugins are available:
+🔗 **Démo en ligne** : [meteo-land.vercel.app](https://meteo-land.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![Météo Land Screenshot](./screenshot.png)
 
-## React Compiler
+## ✨ Fonctionnalités
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🔍 Recherche de villes avec suggestions en temps réel (gère les villes homonymes via pays/région)
+- 🌡️ Météo actuelle : température, ressenti, humidité, vent, pression
+- 📅 Prévisions sur 5 jours avec température min/max
+- 🎨 Fond dynamique selon les conditions météo (soleil, pluie, nuit, neige...)
+- 📱 Interface responsive (mobile, tablette, desktop)
+- ⚡ Gestion des états de chargement et d'erreur
 
-## Expanding the ESLint configuration
+## 🛠️ Stack technique
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend** : React 19, Vite
+- **Styling** : Tailwind CSS v4
+- **API** : OpenWeatherMap (Weather + Geocoding)
+- **Tests** : Vitest, React Testing Library
+- **CI/CD** : GitHub Actions (lint + tests automatiques)
+- **Déploiement** : Vercel
+
+## 🚀 Lancer le projet en local
+
+```bash
+# Cloner le repo
+git clone https://github.com/ansenthandrayen/meteo-land.git
+cd meteo-land
+
+# Installer les dépendances
+npm install
+
+# Créer un fichier .env à la racine avec :
+# VITE_WEATHER_API_KEY=votre_clé_openweathermap
+
+# Lancer le serveur de développement
+npm run dev
+```
+
+## 🧪 Tests
+
+```bash
+npm run test:run
+```
+
+## 📂 Architecture
+
+src/
+
+├── components/ # Composants React réutilisables
+
+├── services/ # Appels API (OpenWeatherMap)
+
+├── tests/ # Tests unitaires
+
+├── App.jsx # Composant racine
+
+└── main.jsx # Point d'entrée
+
+## 📝 Licence
+
+Projet personnel à but de portfolio.
