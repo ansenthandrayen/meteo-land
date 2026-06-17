@@ -53,6 +53,10 @@ function SearchBar({ onSearch }) {
       const results = await searchCities(value);
       setSuggestions(results);
     } catch (err) {
+      // On log l'erreur en console pour faciliter le debug
+      // mais on n'affiche rien à l'utilisateur — la recherche de suggestions
+      // n'est pas une fonctionnalité critique, l'app reste utilisable
+      console.error("Erreur lors de la recherche de villes:", err);
       setSuggestions([]);
     } finally {
       setLoading(false);
