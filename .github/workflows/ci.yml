@@ -1,0 +1,41 @@
+# Nom du workflow affiché dans l'onglet Actions de GitHub
+name: CI
+
+# Déclencheurs → quand ce workflow doit se lancer
+on:
+  # À chaque push sur la branche main
+  push:
+    branches: [main]
+  # À chaque Pull Request ciblant main
+  pull_request:
+    branches: [main]
+
+# Liste des tâches à exécuter
+jobs:
+  # Un seul job nommé "test" qui regroupe lint + tests
+  test:
+    # Le job s'exécute sur une machine virtuelle Ubuntu fournie par GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 → récupère le code du repo sur la machine virtuelle
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      # Étape 2 → installe Node.js sur la machine virtuelle
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      # Étape 3 → installe les dépendances du projet
+      - name: Installer les dépendances
+        run: npm install
+
+      # Étape 4 → vérifie la qualité du code avec ESLint
+      - name: Lancer ESLint
+        run: npm run lint
+
+      # Étape 5 → lance les tests unitaires
+      - name: Lancer les tests
+        run: npm run test:run
